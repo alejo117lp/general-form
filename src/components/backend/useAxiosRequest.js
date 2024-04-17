@@ -1,0 +1,35 @@
+import { useState, useCallback } from 'react';
+import axios from 'axios';
+
+function useAxiosRequest() {
+  const [responseData, setResponseData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const sendRequest = useCallback(async ({ url, method = 'GET', data = null, headers = {} }) => {
+    setLoading(true);
+    setError(null);
+    
+    /* headers = {'Bearer': mi_token} */
+    try {
+      const axiosConfig = {
+        url,
+        method,
+        data,
+        headers,
+      };
+      const response = await axios(axiosConfig);
+      setResponseData(response.data);
+    } catch (error) {
+      setError(error.response ? error.response.data : error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []); // No hay dependencias aquí ya que no depende de ningún estado o prop externo
+
+  return { responseData, error, loading, sendRequest };
+}
+
+export default useAxiosRequest;
+
+

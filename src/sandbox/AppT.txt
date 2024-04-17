@@ -1,0 +1,73 @@
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { DataProvider, useData } from './components/backend/DataContext';
+
+import './App.css';
+import Header from './components/general_components/Header';
+import ResponsiveSidebar from './components/general_components/ResponsiveSidebar';
+import GeneralForm from './components/general_form/GeneralForm';
+import Login from './components/login/Login';
+import DataTreatment from './components/data_treatment/DataTreatment';
+import Profile from './components/profile/Profile';
+import RecoverPassword from './components/recover_password/RecoverPassword';
+import AuthPersonalData from './components/docs/AuthDatosPersonales.pdf';
+
+const politics = "https://www.fundacionudea.com/sitio/img/POLITICASDEPROTECCIONDEDATOSPERS%20-%20Copy%201.pdf";
+
+function App() {
+  return (
+    <DataProvider>
+      <Router>
+        <MainApp />
+      </Router>
+    </DataProvider>
+  );
+}
+
+function MainApp() {
+  const currentPath = useLocation().pathname;
+  const navigate = useNavigate();
+  const { userData, loading, error } = useData();
+
+  // Redirige basado en el estado de userData una vez que haya cargado
+  useEffect(() => {
+    if (!loading && userData) {
+      if (userData.is_data_treatment_accepted === 0 || userData.is_data_treatment_accepted == null) {
+        if (currentPath !== '/data-treatment') navigate('/data-treatment');
+      } else if (userData.is_data_updated === 'No' || userData.is_data_updated == null) {
+        if (currentPath !== '/general-form') navigate('/general-form');
+      } else if (userData.is_data_updated === 'Si') {
+        if (currentPath === '/' || currentPath === '/login') navigate('/profile');
+      }
+    } else if (!loading && !userData && currentPath !== '/login') {
+      navigate('/login');
+    }
+  }, [loading, userData, currentPath, navigate]);
+
+  if (loading) return <p>Cargando Datos...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <div className="App">
+      {currentPath !== '/login' && currentPath !== '/data-treatment' && currentPath !== '/recover-password' && (
+        <div> 
+          <ResponsiveSidebar headerText={'Menú Navegación'} userData={userData} />
+          <Header />
+        </div>
+      )}
+
+      <Routes>
+        <Route path="/login" element={<Login userData={userData} />} />
+        <Route path='/recover-password' element={<RecoverPassword />} />
+        <Route path='/data-treatment' element={<DataTreatment linkAuth={AuthPersonalData} linkPol={politics} userData={userData} />} />
+        {userData && <>
+          <Route path='/general-form' element={<GeneralForm userData={userData} />} />
+          <Route path='/profile' element={<Profile userData={userData} />} />
+        </>}
+        <Route path="*" element={<Navigate replace to="/login" />} />
+      </Routes>
+    </div>
+  );
+}
+
+export default App;

@@ -1,0 +1,57 @@
+
+/*img{
+  max-width: 160px;
+}*/
+.profile_picture{
+  max-width: 160px;
+  max-height: 160px;
+  border-radius: 8px;
+  border: solid 1px #d3d3d3;
+}
+
+#profile_picture_input{
+  width: 100%;
+}
+
+.upload-pic-container{
+  grid-row: 2;
+  padding: 0 15px;
+  display: block;
+}
+
+.img-container{
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  grid-row: 1/5;
+}
+
+.name-and-pic{
+  font-family:'Work Sans';
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  align-items: center;
+  grid-gap:15px;
+}
+
+/* Mediaqueries*/
+
+/*Celular*/
+@media (max-width: 700px) {
+  .name-and-pic{
+    grid-template-columns: 1fr;
+  }
+
+  .img-container{
+    justify-content:center;
+    grid-row: 3;
+  }
+}
+
+/*Tablet*/
+@media (min-width: 701px) and (max-width:1024px) {
+  .img-container{
+    justify-content: center;
+    padding: 0;
+  }
+}

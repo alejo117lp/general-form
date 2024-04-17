@@ -1,0 +1,41 @@
+.input-file-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 15px;
+    grid-gap: 15px;
+    align-items: center;
+    border-radius: 8px;
+    margin: 15px 0;
+    background-color: #e9e9e9;
+}
+
+.label-file {
+    margin: 0 15px 0 0;
+}
+
+.label-file-m{
+    margin: 0 0 0 115px;
+}
+
+.file-title{
+    font-weight: 600;
+}
+
+.sub-files-t{
+    padding: 0 15px;
+}
+
+.doc-and-date-container{
+    display: grid;
+}
+
+.date-cert-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.MUF-input{
+    grid-column: 2;
+}

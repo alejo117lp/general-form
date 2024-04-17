@@ -1,0 +1,116 @@
+import React from "react";
+import '../../stylesheets/Profile.css'
+import DescriptionInfo from "./DescriptionInfo";
+import defaultPic from '../../img/profile_pic_default.jpg'
+import format from 'date-fns/format';
+import isValid from 'date-fns/isValid';
+import parseISO from 'date-fns/parseISO';
+import { FaDollarSign, FaCheckCircle, FaMinusCircle, FaMapMarkerAlt  } from "react-icons/fa";
+/* icons: https://fontawesome.com/v4/cheatsheet/ 
+https://react-icons.github.io/react-icons/icons/fa/ */
+
+
+const fontStyles = {fontSize:'25px'}
+
+function Profile ( {userData} ){
+
+   const birthDate = userData?.birth_date ? parseISO(userData.birth_date) : null;
+   const formattedBirthDate = isValid(birthDate) ? format(birthDate, 'yyyy-MM-dd') : 'Fecha no disponible';
+
+   return(
+      <div className='principal-container'>
+         <div className='profile-head'>
+            <div className='profile-head-picture-container'>
+               <img src={userData?.photo} className='profile-head-picture' />
+            </div>
+            <div className='profile-head-info'>
+               <div className='profile-head-userName'>
+                  <h4>{userData?.full_name}</h4>
+               </div>
+               <div className='profile-head-rol'>
+                  <div>
+                     {userData?.employee_rol}
+                  </div>
+                  {userData?.state && (
+                     <div>
+                        {userData?.state === 'ACTIVO' && (
+                           <FaCheckCircle style={{fontSize: '18px', color:'green'}}/>
+                        )}
+                        {userData?.state === 'RETIRADO' && (
+                           <FaMinusCircle style={{fontSize: '18px', color:'red'}}/>
+                        )}
+                        {' '}
+                        {userData?.state.charAt(0)}{userData?.state.slice(1).toLowerCase()}
+                     </div> 
+                  )}
+               </div>
+            </div>
+         </div>
+         <div className='boxes-info-container'>
+
+            <DescriptionInfo 
+               title = 'Información General'
+
+               iconName = 'fa fa-address-card'
+               detail1 = 'Documento de Identidad:'
+               descriptionDetail1 = {userData?.id_document}
+
+               iconName2 = 'fa fa-birthday-cake'
+               detail2 = 'Fecha de Nacimiento:'
+               descriptionDetail2 = {formattedBirthDate}
+
+               iconName3 = 'fa fa-venus-mars'
+               detail3 = 'Género:'
+               descriptionDetail3 = {userData?.gender}
+
+               iconName4 = 'fa fa-tint'
+               detail4 = 'Grupo Sanguíneo:'
+               descriptionDetail4 = {userData?.blood_type}
+            />
+
+            <DescriptionInfo 
+               title = 'Información Contacto'
+
+               iconName = 'fa fa-envelope'
+               detail1 = 'Correo Electrónico Personal:'
+               descriptionDetail1 = {userData?.email}
+
+               iconName2 = 'fa fa-mobile'
+               detail2 = 'Número Telefónico:'
+               descriptionDetail2 = {userData?.cellphone}
+
+               iconName3 = 'fa fa-building'
+               detail3 = 'Dirección Residencia:'
+               descriptionDetail3 = {userData?.home_address}
+
+               iconName4r = {<FaMapMarkerAlt style={fontStyles}/>}
+               detail4 = 'Municipio:'
+               descriptionDetail4 = {userData?.home_city}
+            />
+
+            <DescriptionInfo 
+               title = 'Información Laboral'
+
+               iconName = 'fa fa-object-ungroup'
+               detail1 = 'Proyecto:'
+               descriptionDetail1 = {userData?.employee_project}
+
+               iconName2 = 'fa fa-calendar'
+               detail2 = 'Fecha de Ingreso:'
+               descriptionDetail2 = {userData?.entry_date}
+
+               iconName3r = {<FaDollarSign style={fontStyles}/>}
+               detail3 = 'Salario Asignado:'
+               descriptionDetail3 = {userData?.salary}
+
+               iconName4 = 'fa fa-credit-card'
+               detail4 = 'Cuenta Bancaria:'
+               descriptionDetail4 = {userData?.bank_account_number}
+            />
+         </div>
+         <br/>
+      </div>
+   )
+}
+
+export default Profile;

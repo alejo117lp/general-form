@@ -1,0 +1,79 @@
+.header-container{
+    background-color: #5c9c31;
+    /*background-color: #266141;*/
+    height: 90px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-image{
+    max-width: 150px;
+}
+
+/* Contenedor cuadro de Menú hamburguesa en el componente CDBSidebarHeader*/
+.sc-hknOHE{
+    height: 90px;
+    background-color: #5c9c31;
+}
+
+/* sc-cfxfcM: Contenedor de la <li> en los campos del NavLink*/
+.sc-cfxfcM:hover{
+    /*background-color: #03A62C;*/
+    background-color: #5c9c31;
+    border-radius: 8px;
+}
+
+/*.sidebar-btn-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}*/
+
+.sidebar-btn-wrapper button{
+    all:unset;
+}
+
+/* Mediaqueries*/
+
+/*Celular*/
+@media (max-width: 700px) {
+
+    .header-container, .sc-hknOHE{
+        max-height: 72px;
+    }
+    
+    .header-image{
+        max-width: 130px;
+    }
+
+     /* Sidebar Conf */
+
+     .lhYbII.toggled {
+        width: 70px !important;
+        min-width: 70px !important;
+    }
+
+    /*.fa-large{
+        font-size: 28px;
+    }*/
+    
+}
+
+/*Tablet*/
+@media (min-width: 701px) and (max-width:1024px) {
+    .header-container, .sc-hknOHE{
+        max-height: 100px;
+    }
+    
+    .header-image{
+        max-width: 160px;
+    }
+
+    /*Icono menú hamburguesa */
+    .fa-large{
+        font-size: 32px;
+    }
+}
