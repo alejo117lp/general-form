@@ -19,6 +19,8 @@ function UploadFileWithDate ( props ){
 
   const handleFileChange = async(event) => {
     let file = event.target.files[0];
+    if(!file) return;
+
     setSelectedFile(file);
 
     try{
@@ -35,17 +37,17 @@ function UploadFileWithDate ( props ){
       const newFileName = fileNameBase.toUpperCase()+ '.pdf';
 
       // Paso 3: Preparar los datos para enviar al componente padre
-      const fileData = {
+      props.onFileChange ({
         name: newFileName,
         base64: base64Data
-      };
+      });
 
-      console.log(fileData);
+      //console.log(fileData);
 
       // Llama a la función callback definida en el componente padre
-      if (props.onFileChange) {
+      /*if (props.onFileChange) {
         props.onFileChange(fileData);
-      }
+      }*/
 
     } catch (error){
       console.error('Error al convertir el archivo a base64', error);
@@ -57,7 +59,7 @@ return (
   <div className="input-file-box">
     <div>
       <label className="label-file">
-        <span className="file-title">{props.requiredFile}</span>  
+        <span className="file-title">{props.requiredFile + ":"}</span>  
         {' ' + props.descriptionFile } 
     </label>
     </div>

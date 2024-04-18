@@ -27,8 +27,8 @@
     return (
       <div className="input-file-box">
         <label className="label-file">
-          <span className="file-title">{props.requiredFile}</span>
-          {props.descriptionFile}
+          <span className="file-title">{props.requiredFile + ":"}</span>
+          {" "+props.descriptionFile}
         </label>
         <input
           type="file"

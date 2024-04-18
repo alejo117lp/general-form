@@ -3,7 +3,7 @@ import { convertToBase64 } from "../functions/fileUtils";
 
 
 //MUF: Multiple Upload Files
-function MUFLine(props) {
+function MUFLine( props ) {
 
   //Manejar estados de archivos seleccionados y textos ingresados
   const [selectedFile, setSelectedFile] = useState(null);
@@ -29,6 +29,7 @@ function MUFLine(props) {
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
+    if(!file) return;
     setSelectedFile(file);
 
     try {
@@ -39,16 +40,16 @@ function MUFLine(props) {
        
       const newFileName = fileNameBase.toUpperCase() + '.pdf';
 
-      const fileData = {
+      props.onFileChange ({
         name: newFileName,
         base64Data: base64Data
-      }
+      });
 
-      console.log(fileData);
+      //console.log(fileData);
 
-      if (props.onFileChange) {
+      /*if (props.onFileChange) {
         props.onFileChange(fileData);
-      }
+      }*/
     } catch (error) {
       console.log('Error al convertir el archivo a base 64', error);
     }
@@ -66,6 +67,7 @@ function MUFLine(props) {
             <input 
               className="MUF-input"
               type="text"
+              placeholder="Empresa"
               onChange={handleTextInputChange}
             />
           </div>
@@ -75,7 +77,7 @@ function MUFLine(props) {
           type="file" 
           accept=".pdf" 
           onChange={handleFileChange}
-          name={props.fileName}
+          //name={props.fileName}
         />
       </div>
     </div>

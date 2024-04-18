@@ -10,6 +10,7 @@ import RecoverPassword from './components/recover_password/RecoverPassword';
 import useAxiosRequest from './components/backend/useAxiosRequest';
 import AuthPersonalData from './components/docs/AuthDatosPersonales.pdf';
 import { useNavigate } from "react-router-dom";
+import BootstrapTest from './components/TESTING/BootstrapTest';
 
 
 const politics = 'https://www.fundacionudea.com/sitio/img/POLITICASDEPROTECCIONDEDATOSPERS%20-%20Copy%201.pdf';
@@ -69,6 +70,8 @@ function MainApp( {isLoggedIn, setIsLoggedIn} ) {
         <Route path="/profile" element={<Profile userData={responseData} />} />
         <Route path="/general-form" element={<GeneralForm id={id} setDataFetched={setDataFetched} />} />
         <Route path='/recover-password' element={<RecoverPassword />} />
+        <Route path='/bootstrap' element={<BootstrapTest />} />
+        
       </Routes>
     </div>
   );

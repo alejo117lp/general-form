@@ -2,11 +2,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 15px;
-    grid-gap: 15px;
+    grid-gap: 0 15px;
     align-items: center;
     border-radius: 8px;
     margin: 15px 0;
-    background-color: #e9e9e9;
+    /*background-color: #e9e9e9;*/
 }
 
 .label-file {
@@ -31,7 +31,7 @@
 
 .date-cert-container{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 45% 55%;
     align-items: center;
     padding: 15px 0;
 }
