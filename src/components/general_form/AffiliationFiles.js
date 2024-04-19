@@ -1,149 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
 import MUFLine from "./MUFLine";
-import UploadFile from "./UploadFile";
 
+function AffiliationFiles(props) {
+  
+  const comfUrl = "https://www.comfama.com/empresas/formatos-y-formularios/";
 
-function AffiliationFiles( props ){
+  // Estados para cada tipo de documento, usando un objeto para identificar cada tipo por clave.
+  // Cada clave mantiene una lista de documentos cargados.
+  const [mufLines, setMufLines] = useState({
+    'birth_certificate_child': [],
+    'child_id': [],
+    'studies_certification': []
+  });
   
-  const comfUrl = "https://www.comfama.com/empresas/formatos-y-formularios/"
-  
+  // Manejador para los cambios de archivos, añade el archivo cargado al estado en el componente padre.
   const handleFileChange = (key, data) => {
-    props.onFileDataChange(prev => ({ ...prev, [key]: data }));
+    props.onFileDataChange(prev => ({
+      ...prev,
+      [key]: [...(prev[key] || []), data]  // Añade el nuevo archivo a la lista existente para 'key'
+    }));
   };
 
-  return(
-    <div>
-      <p className="file-title general-padding">
-        Anexar la <a href={comfUrl} target="_blank">Declaración Juramentada de Comfama</a>  y la siguiente documentación: 
-      </p>
+  // Función para agregar nuevas líneas de documentos, manteniendo un máximo de 3
+  const handleAddLine = (documentType) => {
+    if ((mufLines[documentType] || []).length < 3) {
+      // Copia el estado actual y añade un nuevo índice al array correspondiente
+      setMufLines(prev => ({
+        ...prev,
+        [documentType]: [...(prev[documentType] || []), { index: (prev[documentType] || []).length + 1 }]
+      }));
+    } else {
+      alert(`No puedes agregar más de 3 líneas para el tipo de documento: ${documentType}`);
+    }
+  };
 
+  return (
+    <div className="form-box">
+      <p className="file-title general-padding">
+        Anexar la <a href={comfUrl} target="_blank" rel="noopener noreferrer">Declaración Juramentada de Comfama</a> y la siguiente documentación:
+      </p>
       <div className="input-file-box-m">
         <div className="sub-files-t">
           <p>
             <span className="file-title">
-            {'Documentación para la afilición de los padres'}:
+              {'Documentación para la afilición de hijos'}:
             </span>
             {'  '}
           </p>
         </div>
 
-        <div className="marginL">
-          <MUFLine 
-            requiredFile= {'Copia de cédula ampliada al 150 de los padres'}
-            fileName= {'parents_id'}
-            userId={props.userId}
-            devNameFile = {'CEDULA_PADRES'}
-            onFileChange={(data) => handleFileChange('parents_id', data)}
-          />
-
-          <MUFLine 
-            requiredFile= {'Registro Civil de Nacimiento del empleado'}
-            fileName= {'birth_certificate_employee'}
-            userId={props.userId}
-            devNameFile = {'REGISTRO_CIVIL'}
-            onFileChange={(data) => handleFileChange('birth_certificate_employee', data)}
-          />
-        </div>
-
-        <div className="input-file-box-m">
-          <div className="sub-files-t">
-            <p>
-              <span className="file-title">
-              {'Documentación para la afilición del cónyuge o pareja'}:
-              </span>
-              {'  '}
-            </p>
+        {Object.entries(mufLines).map(([docType, lines]) => (
+          <div className="child-fiels-container" key={docType}>
+            <p style={{margin:'10px 15px'}}> Documento: {docType.replace('_', ' ').toUpperCase()} </p>
+            {(lines || []).map((line, index) => (
+              <MUFLine
+                key={`${docType}-${index}`}
+                requiredFile={docType === 'birth_certificate_child' ? 'Fotocopia del Registro Civil de Nacimiento por ambos lados y con sellos (legible)' :
+                              docType === 'child_id' ? 'Fotocopia de la Tarjeta de Identidad preferiblemente ampliada al 150%' :
+                              'Certificado de estudio, el cual debe ser actualizado.'}
+                fileName={`${docType}_${index + 1}`}
+                userId={props.userId}
+                devNameFile={`${docType.toUpperCase()}_${index + 1}`}
+                onFileChange={(data) => handleFileChange(docType, data)}
+              />
+            ))}
+            {/*<button type="button" onClick={() => handleAddLine(docType)}>Agregar línea para {docType.replace('_', ' ').toUpperCase()}</button>*/}
+            <button 
+              type="button" 
+              className="btn btn-primary btn-funda"
+              style={{margin:'0 15px'}}   
+              onClick={() => handleAddLine(docType)} >Agregar Documento</button>
           </div>
-
-          <div className="marginL">
-            <MUFLine 
-              requiredFile= {'Copia de la cédula ampliada al 150% (legible)'}
-              fileName= {'couple_id '}
-              userId={props.userId}
-              devNameFile = {'CEDULA_PAREJA'}
-              onFileChange={(data) => handleFileChange('couple_id ', data)}
-            />
-
-            <MUFLine 
-              requiredFile= {'Acta de matrimonio o extra juicio según sea el caso'}
-              fileName= {'marriage_certificate'}
-              userId={props.userId}
-              devNameFile = {'ACTA_MATRIMONIO_EXTRAJUICIO'}
-              onFileChange={(data) => handleFileChange('marriage_certificate', data)}
-            />
-          </div>
-       </div>
-
-       <div className="input-file-box-m">
-          <div className="sub-files-t">
-            <p>
-              <span className="file-title">
-              {'Documentación para la afilición de hijos'}:
-              </span>
-              {'  '}
-            </p>
-          </div>
-
-          <div className="marginL">
-            <p className="marginL2"> De 0 a 7 años:</p>
-            <MUFLine 
-              requiredFile= {'Fotocopia del Registro Civil de Nacimiento por ambos lados y con sellos (legible)'}
-              fileName= {'birth_certificate_child '}
-              userId={props.userId}
-              devNameFile = {'REGISTRO_CIVIL_HIJO'}
-              onFileChange={(data) => handleFileChange('birth_certificate_child ', data)}
-            />
-          </div>
-
-          <div className="marginL">
-            <p className="marginL2"> De 7 a 12 años:</p>
-            <MUFLine 
-              requiredFile= {'Fotocopia del Registro Civil de Nacimiento por ambos lados y con sellos (legible)'}
-              fileName= {'birth_certificate_child'}
-              userId={props.userId}
-              devNameFile = {'REGISTRO_CIVIL_HIJO'}
-              onFileChange={(data) => handleFileChange('birth_certificate_child', data)}
-            />
-
-            <MUFLine 
-              requiredFile= {'Fotocopia de la Tarjeta de Identidad preferiblemente ampliada al 150%'}
-              fileName= {'child_id'}
-              userId={props.userId}
-              devNameFile = {'TARJETA_IDENTIDAD_HIJO'}
-              onFileChange={(data) => handleFileChange('child_id', data)}
-            />
-          </div>
-
-          <div className="marginL">
-            <p className="marginL2"> De 12 años en adelante:</p>
-            <MUFLine 
-              requiredFile= {'Fotocopia del Registro Civil de Nacimiento por ambos lados y con sellos (legible)'}
-              fileName= {'birth_certificate_child'}
-              userId={props.userId}
-              devNameFile = {'REGISTRO_CIVIL_HIJO'}
-              onFileChange={(data) => handleFileChange('birth_certificate_child', data)}
-            />
-
-            <MUFLine 
-              requiredFile= {'Fotocopia de la Tarjeta de Identidad preferiblemente ampliada al 150%'}
-              fileName= {'child_id'}
-              userId={props.userId}
-              devNameFile = {'TARJETA_IDENTIDAD_HIJO'}
-              onFileChange={(data) => handleFileChange('child_id', data)}
-            />
-
-            <MUFLine 
-              requiredFile= {'Certificado de estudio, el cual debe ser actualizado.'}
-              fileName= {'studies_certification'}
-              userId={props.userId}
-              devNameFile = {'CERTIFICADO_ESTUDIO_HIJO'}
-              onFileChange={(data) => handleFileChange('studies_certification', data)}
-            />
-          </div>
-       </div>
+        ))}
       </div>
+      <br />
     </div>
-  )
+  );
 }
 
 export default AffiliationFiles;

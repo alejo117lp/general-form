@@ -50,8 +50,8 @@ input::-webkit-file-upload-button{
 }
 
 input::-webkit-file-upload-button:hover{
-  background-color: #333333;
-  border-color: #333333;
+  background-color: #565656;
+  border-color: #565656;
 }
 
 select{
@@ -163,6 +163,17 @@ select{
 
 .general-padding{
   padding: 15px;
+}
+
+.btn-funda{
+  background-color: #5c9c31;
+  border-color: #5c9c31;
+  color: #e3e3e3;
+}
+
+.btn-funda:hover{
+  background-color: #565656;
+  border-color: #565656;
 }
 
 /* Mediaqueries*/

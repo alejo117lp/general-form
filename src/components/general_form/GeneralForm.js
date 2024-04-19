@@ -9,12 +9,14 @@ import EndowmentEmvariasForm from './EndowmentEmvarias';
 import UploadFiles from './UploadFiles';
 import TestComponent from '../TESTING/TestComponent';
 import TestForm from '../TESTING/TestForm';
+import AffiliationFiles from './AffiliationFiles';
 
 
 function GeneralForm({ id, setDataFetched }) {
   const manSize = ['28', '30', '32', '34', '36', '38'];
   const womanSize = ['6', '8', '10', '12', '14', '16', '18'];
-  
+
+  const [isChecked, setIsChecked] = useState(false);
 
   const urlDev = process.env.REACT_APP_URL_TEST;
   const [selectedGender, setSelectedGender] = useState('');
@@ -118,6 +120,31 @@ function GeneralForm({ id, setDataFetched }) {
           onFileDataChange={handleFileDataChange}
         />
         <br />
+
+        <div className="form-check" style={{padding:'15px'}}>
+          <input 
+            className="form-check-input" 
+            style={{marginLeft:'0', marginRight:'1rem',  borderColor:'#a3a3a3'}} 
+            type="checkbox"
+            checked={isChecked}
+            onChange={()=> setIsChecked((prev) => !prev)}
+            id="flexCheckDefault"
+          />
+          <label 
+            className="form-check-label" 
+            htmlFor="flexCheckDefault" 
+            style={{fontStyle:'italic'}}>
+            Tiene beneficiarios a la EPS o Caja de compensación familiar
+          </label>
+        </div>
+
+        {isChecked &&(
+          <AffiliationFiles
+            userId= {responseData?.id_document}
+            onFileDataChange={handleFileDataChange}
+          />
+        )}
+
         <div>
           <button className='principal-button' type="submit">Enviar</button>
         </div>

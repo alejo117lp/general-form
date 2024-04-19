@@ -177,27 +177,6 @@ function UploadFiles ( props ){
           devNameFile = {'DECLARACION_JURAMENTADA_COMFAMA'}
           onFileChange={(data) => handleFileChange('sworn_declaration_comfama', data)}
         />
-        
-        <div className="form-check" style={{padding:'15px'}}>
-          <input 
-            className="form-check-input" 
-            style={{marginLeft:'0', marginRight:'1rem',  borderColor:'#a3a3a3'}} 
-            type="checkbox"
-            checked={isChecked}
-            onChange={()=> setIsChecked((prev) => !prev)}
-            id="flexCheckDefault"
-          />
-          <label 
-            className="form-check-label" 
-            for="flexCheckDefault" 
-            style={{fontStyle:'italic'}}>
-            Tiene beneficiarios a la EPS o Caja de compensación familiar
-          </label>
-        </div>
-
-        {isChecked &&(
-          <AffiliationFiles/>
-        )}
 
       </div>
     </div>
