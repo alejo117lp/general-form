@@ -63,6 +63,7 @@ function MainApp( {isLoggedIn, setIsLoggedIn} ) {
           <Header />
         </>
       )}
+      
       <Routes>
         <Route path='/' element= {<GeneralForm id={id}/>}/>
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
@@ -71,7 +72,6 @@ function MainApp( {isLoggedIn, setIsLoggedIn} ) {
         <Route path="/general-form" element={<GeneralForm id={id} setDataFetched={setDataFetched} />} />
         <Route path='/recover-password' element={<RecoverPassword />} />
         <Route path='/bootstrap' element={<BootstrapTest />} />
-        
       </Routes>
     </div>
   );

@@ -39,3 +39,77 @@
 .MUF-input{
     grid-column: 2;
 }
+
+.marginL{
+    margin-left: -80px;
+}
+
+.marginL2{
+    margin: 0 0 0 105px;
+    font-weight: 500;
+}
+
+
+/* MOBILE */
+@media (max-width: 700px){
+    .input-file-box {
+        grid-template-columns: 1fr;
+    }
+
+    input{
+        font-size: 0.77rem;
+        padding: 8px 0 !important;
+    }
+
+    .input-file-box {
+        display: block;
+    }
+
+    .date-cert-container {
+        grid-template-columns: 1fr;
+    }
+
+    .label-file-m {
+        margin: 0;
+    }
+
+    .date-cert-container {
+        display: block;
+    }
+
+    .marginL {
+        margin-left: 0;
+    }
+
+    .marginL2{
+        margin: 0 0 0 25px;
+        font-weight: 500;
+    }
+   
+}
+
+
+/* TABLET */
+@media (min-width: 701px) and (max-width:1024px){
+
+    .label-file-m {
+        margin: 0 0 0 20px;
+    }
+
+    .date-cert-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: center;
+        padding: 15px 0;
+    }
+
+    .marginL{
+        margin-left: 0;
+    }
+
+    input, select {
+        min-width:auto;
+        max-width: auto; 
+    }
+  
+}
