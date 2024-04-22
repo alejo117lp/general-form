@@ -7,8 +7,6 @@ import ExclusiveInitInfo from './ExclusiveInitInfo';
 import EndowmentInformation from './Endowment';
 import EndowmentEmvariasForm from './EndowmentEmvarias';
 import UploadFiles from './UploadFiles';
-import TestComponent from '../TESTING/TestComponent';
-import TestForm from '../TESTING/TestForm';
 import AffiliationFiles from './AffiliationFiles';
 
 
@@ -92,13 +90,7 @@ function GeneralForm({ id, setDataFetched }) {
   return (
     <div className='principal-container'>
       <h1>Datos Generales</h1>
-      {/*<TestComponent></TestComponent>
-      <TestForm 
-        userId= {responseData?.id_document} 
-        nameBox={'test'}
-        onFileDataChange={handleFileDataChange}
-      />*/}
-      
+  
       <ExclusiveInitInfo nameBox={"Información Administrativa"} userData={responseData} />
       <br/>
       <form className='general-form' onSubmit={handleSubmit}>
@@ -121,7 +113,7 @@ function GeneralForm({ id, setDataFetched }) {
         />
         <br />
 
-        <div className="form-check" style={{padding:'15px'}}>
+        <div className="form-check form-box">
           <input 
             className="form-check-input" 
             style={{marginLeft:'0', marginRight:'1rem',  borderColor:'#a3a3a3'}} 
@@ -137,6 +129,8 @@ function GeneralForm({ id, setDataFetched }) {
             Tiene beneficiarios a la EPS o Caja de compensación familiar
           </label>
         </div>
+
+        <br />
 
         {isChecked &&(
           <AffiliationFiles

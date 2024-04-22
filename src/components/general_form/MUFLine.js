@@ -8,6 +8,7 @@ function MUFLine( props ) {
   //Manejar estados de archivos seleccionados y textos ingresados
   const [selectedFile, setSelectedFile] = useState(null);
   const [textInput, setTextInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
 
   //Normalización de texto
   function normalizeText(input) {
@@ -25,6 +26,7 @@ function MUFLine( props ) {
   const handleTextInputChange = (event) => {
     const normalizedText = normalizeText(event.target.value);
     setTextInput(normalizedText);
+    setIsTyping(true);
   };
 
   const handleFileChange = async (event) => {
@@ -45,11 +47,6 @@ function MUFLine( props ) {
         base64Data: base64Data
       });
 
-      //console.log(fileData);
-
-      /*if (props.onFileChange) {
-        props.onFileChange(fileData);
-      }*/
     } catch (error) {
       console.log('Error al convertir el archivo a base 64', error);
     }
@@ -72,13 +69,17 @@ function MUFLine( props ) {
             />
           </div>
         )}
-        <input 
+        {isTyping && (
+          <input 
           className="MUF-input"
           type="file" 
           accept=".pdf" 
           onChange={handleFileChange}
           //name={props.fileName}
-        />
+          />
+        )
+
+        }
       </div>
     </div>
   );

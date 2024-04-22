@@ -27,14 +27,16 @@
     return (
       <div className="input-file-box">
         <label className="label-file">
-          <span className="file-title">{props.requiredFile + ":"}</span>
+          <span className="file-title">
+            <a href={props.link_href} target="_blank" rel="noopener noreferrer">{props.link_text}</a>
+            {props.requiredFile + ":"}</span>
           {" "+props.descriptionFile}
         </label>
         <input
           type="file"
           accept=".pdf"
           onChange={handleFileChange}
-          name={props.fileName}
+          //name={props.fileName}
         />
       </div>
     );
